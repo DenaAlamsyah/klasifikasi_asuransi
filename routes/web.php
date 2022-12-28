@@ -1,5 +1,8 @@
 <?php
 
+use App\Http\Controllers\BuildingObjectController;
+use App\Http\Controllers\HomeController;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -19,8 +22,9 @@ Route::get('/', function () {
 
 Auth::routes();
 
-Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
-
-// Route::get('login', function () {
-// 	return view('login');
-// });
+Route::group(['middleware' => 'auth'], function () {
+    Route::get('/home', [HomeController::class, 'index'])->name('home');
+    Route::resources([
+        'building-object' => BuildingObjectController::class
+    ]);
+});
