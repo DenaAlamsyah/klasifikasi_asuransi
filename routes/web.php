@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\BuildingObjectController;
+use App\Http\Controllers\BuildingTypeController;
 use App\Http\Controllers\HomeController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
@@ -25,6 +26,7 @@ Auth::routes();
 Route::group(['middleware' => 'auth'], function () {
     Route::get('/home', [HomeController::class, 'index'])->name('home');
     Route::resources([
-        'building-object' => BuildingObjectController::class
+        'building-object' => BuildingObjectController::class,
+        'building-type' => BuildingTypeController::class
     ]);
 });

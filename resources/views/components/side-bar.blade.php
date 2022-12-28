@@ -37,7 +37,7 @@
             <div class="bg-white py-2 collapse-inner rounded">
                 <h6 class="collapse-header">Menu data bangunan</h6>
                 <a class="collapse-item" href="{{ route('building-object.index') }}">Objek Bangunan</a>
-                <a class="collapse-item" href="cards.html">Tipe Bangunan</a>
+                <a class="collapse-item" href="{{ route('building-type.index') }}">Tipe Bangunan</a>
                 <a class="collapse-item" href="cards.html">Area Banjir</a>
                 <a class="collapse-item" href="cards.html">Bangunan</a>
             </div>
