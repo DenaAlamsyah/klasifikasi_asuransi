@@ -3,6 +3,7 @@
 use App\Http\Controllers\BuildingObjectController;
 use App\Http\Controllers\BuildingTypeController;
 use App\Http\Controllers\BuildingFloodAreaController;
+use App\Http\Controllers\CustomerController;
 use App\Http\Controllers\HomeController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
@@ -29,6 +30,7 @@ Route::group(['middleware' => 'auth'], function () {
     Route::resources([
         'building-object' => BuildingObjectController::class,
         'building-type' => BuildingTypeController::class,
-        'building-flood-area' => BuildingFloodAreaController::class
+        'building-flood-area' => BuildingFloodAreaController::class,
+        'customer' => CustomerController::class
     ]);
 });

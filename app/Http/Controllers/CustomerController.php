@@ -4,6 +4,9 @@ namespace App\Http\Controllers;
 
 use App\Models\Customer;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Validator;
+use Yajra\DataTables\Facades\DataTables;
 
 class CustomerController extends Controller
 {
@@ -12,9 +15,24 @@ class CustomerController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        //
+        if ($request->ajax()) {
+            $data = Customer::get();
+            return Datatables::of($data)->addIndexColumn()
+                ->addColumn('action', function ($row) {
+                    $btn = '
+                    <div class="d-flex d-flex flex-row align-items-center justify-content-start">
+                        <a href=' . route("customers.edit", ["customers" => $row->id]) . ' class="btn btn-success btn-sm mx-1"><i class="fa fas fa-edit"></i></a>
+                        <a href="#" onclick="doDelete(this)" class="btn btn-danger btn-sm mx-1" data-id=' . $row->id . '><i class="fa fas fa-trash"></i></a>
+                    </div>
+                    ';
+                    return $btn;
+                })
+                ->rawColumns(['action'])
+                ->make(true);
+        }
+        return view('customers.index');
     }
 
     /**
@@ -24,7 +42,7 @@ class CustomerController extends Controller
      */
     public function create()
     {
-        //
+        return view('customers.create');
     }
 
     /**
@@ -35,7 +53,26 @@ class CustomerController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        Validator::make($request->all(), [
+            'name' => 'required|varchar',
+            'address' => 'required|text',
+            'phone' => 'required|varchar',
+            'email' => 'required|varchar',
+            'gender' => 'required|enum',
+            'indentity_number' => 'required|varchar',
+            'birth_place' => 'required|varchar',
+            'birth_date' => 'required|date',
+        ])->validate();
+        DB::beginTransaction();
+        try {
+            Customer::create($request->all());
+            DB::commit();
+
+            return redirect()->route('customers.index')->with('success', 'Berhasil menambah data Pelanggan.');
+        } catch (\Throwable $th) {
+            DB::rollBack();
+            throw $th;
+        }
     }
 
     /**
@@ -57,7 +94,9 @@ class CustomerController extends Controller
      */
     public function edit(Customer $customer)
     {
-        //
+        return view('customer.edit', [
+            'customer' => $customer
+        ]);
     }
 
     /**
@@ -69,7 +108,26 @@ class CustomerController extends Controller
      */
     public function update(Request $request, Customer $customer)
     {
-        //
+        Validator::make($request->all(), [
+            'name' => 'required|varchar',
+            'address' => 'required|text',
+            'phone' => 'required|varchar',
+            'email' => 'required|varchar',
+            'gender' => 'required|enum',
+            'indentity_number' => 'required|varchar',
+            'birth_place' => 'required|varchar',
+            'birth_date' => 'required|date',
+        ])->validate();
+        DB::beginTransaction();
+        try {
+            $customer->update($request->all());
+            DB::commit();
+
+            return redirect()->route('customer.index')->with('success', 'Berhasil merubah data Pelanggan.');
+        } catch (\Throwable $th) {
+            DB::rollBack();
+            throw $th;
+        }
     }
 
     /**
@@ -80,6 +138,7 @@ class CustomerController extends Controller
      */
     public function destroy(Customer $customer)
     {
-        //
+        $customer->delete();
+        return redirect()->route('customer.index')->with('success', 'Berhasil menghapus data Pelanggan.');
     }
 }

@@ -43,4 +43,15 @@
             </div>
         </div>
     </li>
+
+    <!-- Divider -->
+    <hr class="sidebar-divider">
+
+    <!-- Nav Item - Page Menu -->
+    <li class="nav-item active">
+        <a class="nav-link" href="{{ route('customer.index') }}">
+            <i class="fas fa-fw fa-tachometer-alt"></i>
+            <span>Data Pelanggan</span></a>
+    </li>
+
 </ul>
