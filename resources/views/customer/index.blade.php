@@ -11,7 +11,7 @@
     <!-- Page Heading -->
     <div class="d-sm-flex align-items-center justify-content-between mb-4">
         <h1 class="h3 mb-2 text-gray-800">Data Pelanggan</h1>
-        <a href="{{ route('customers.create') }}"
+        <a href="{{ route('customer.create') }}"
             class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm"><i
                 class="fas fa-plus fa-sm text-white-50"></i> Tambah Data</a>
     </div>
@@ -65,7 +65,7 @@
         $('#dataTable').DataTable({
             processing: true,
             serverSide: true,
-            ajax: "{{ route('customers.index') }}",
+            ajax: "{{ route('customer.index') }}",
             columns: [
                 {data: 'name', name: 'name'},
                 {data: 'address', name: 'address'},
@@ -82,7 +82,7 @@
 
     function doDelete(el) {
         const id = $(el).data('id');
-        const route = `{{ route('customers.destroy', ['customers' => ':id']) }}`
+        const route = `{{ route('customer.destroy', ['customer' => ':id']) }}`
         console.log(route);
         Swal.fire({
             title: 'Hapus Data Pelanggan',

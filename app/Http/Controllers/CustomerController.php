@@ -23,7 +23,7 @@ class CustomerController extends Controller
                 ->addColumn('action', function ($row) {
                     $btn = '
                     <div class="d-flex d-flex flex-row align-items-center justify-content-start">
-                        <a href=' . route("customers.edit", ["customers" => $row->id]) . ' class="btn btn-success btn-sm mx-1"><i class="fa fas fa-edit"></i></a>
+                        <a href=' . route("customer.edit", ["customer" => $row->id]) . ' class="btn btn-success btn-sm mx-1"><i class="fa fas fa-edit"></i></a>
                         <a href="#" onclick="doDelete(this)" class="btn btn-danger btn-sm mx-1" data-id=' . $row->id . '><i class="fa fas fa-trash"></i></a>
                     </div>
                     ';
@@ -32,7 +32,7 @@ class CustomerController extends Controller
                 ->rawColumns(['action'])
                 ->make(true);
         }
-        return view('customers.index');
+        return view('customer.index');
     }
 
     /**
@@ -42,7 +42,7 @@ class CustomerController extends Controller
      */
     public function create()
     {
-        return view('customers.create');
+        return view('customer.create');
     }
 
     /**
@@ -54,13 +54,13 @@ class CustomerController extends Controller
     public function store(Request $request)
     {
         Validator::make($request->all(), [
-            'name' => 'required|varchar',
-            'address' => 'required|text',
-            'phone' => 'required|varchar',
-            'email' => 'required|varchar',
-            'gender' => 'required|enum',
-            'indentity_number' => 'required|varchar',
-            'birth_place' => 'required|varchar',
+            'name' => 'required|string',
+            'address' => 'required|string',
+            'phone' => 'required|string',
+            'email' => 'required|string',
+            'gender' => 'required|in:male,female',
+            'indentity_number' => 'required|numeric|min:16',
+            'birth_place' => 'required|string',
             'birth_date' => 'required|date',
         ])->validate();
         DB::beginTransaction();
@@ -68,7 +68,7 @@ class CustomerController extends Controller
             Customer::create($request->all());
             DB::commit();
 
-            return redirect()->route('customers.index')->with('success', 'Berhasil menambah data Pelanggan.');
+            return redirect()->route('customer.index')->with('success', 'Berhasil menambah data Pelanggan.');
         } catch (\Throwable $th) {
             DB::rollBack();
             throw $th;
@@ -109,13 +109,13 @@ class CustomerController extends Controller
     public function update(Request $request, Customer $customer)
     {
         Validator::make($request->all(), [
-            'name' => 'required|varchar',
-            'address' => 'required|text',
-            'phone' => 'required|varchar',
-            'email' => 'required|varchar',
-            'gender' => 'required|enum',
-            'indentity_number' => 'required|varchar',
-            'birth_place' => 'required|varchar',
+            'name' => 'required|string',
+            'address' => 'required|string',
+            'phone' => 'required|string',
+            'email' => 'required|string',
+            'gender' => 'required|in:male,female',
+            'indentity_number' => 'required|numeric|min:16',
+            'birth_place' => 'required|string',
             'birth_date' => 'required|date',
         ])->validate();
         DB::beginTransaction();

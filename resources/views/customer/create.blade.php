@@ -37,31 +37,31 @@
                 </div>
                 <div class="mb-3">
                     <label for="phone">No Telepon</label>
-                    <textarea class="form-control form-control-solid" id="phone" type="text" placeholder="phone"
-                        name="phone"></textarea>
+                    <input class="form-control form-control-solid" id="phone" type="text" placeholder="phone"
+                        name="phone">
                 </div>
                 <div class="mb-3">
                     <label for="email">Email</label>
-                    <textarea class="form-control form-control-solid" id="email" type="text" placeholder="email"
-                        name="email"></textarea>
+                    <input class="form-control form-control-solid" id="email" type="text" placeholder="email"
+                        name="email">
                 </div>
                 <div class="mb-3">
                     <label for="gender">Jenis Kelamin</label>
                     <select class="form-control form-control-solid" id="gender" placeholder="gender"
                         name="gender">
-                        <option value="Male" selected>Laki-laki</option>
-                        <option value="Female" selected>Perempuan</option>
+                        <option value="male" selected>Male</option>
+                        <option value="female" selected>Female</option>
                     </select>
                 </div>
                 <div class="mb-3">
                     <label for="indentity_number">NIK</label>
-                    <textarea class="form-control form-control-solid" id="indentity_number" type="text" placeholder="indentity_number"
-                        name="indentity_number"></textarea>
+                    <input class="form-control form-control-solid" id="indentity_number" type="text" placeholder="indentity_number"
+                        name="indentity_number">
                 </div>
                 <div class="mb-3">
                     <label for="birth_place">Tempat Lahir</label>
-                    <textarea class="form-control form-control-solid" id="name" type="text" placeholder="birth_place"
-                        name="birth_place"></textarea>
+                    <input class="form-control form-control-solid" id="name" type="text" placeholder="birth_place"
+                        name="birth_place">
                 </div>
                 <div class="mb-3">
                     <label for="birth_date">Tanggal Lahir</label>
