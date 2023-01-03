@@ -55,7 +55,7 @@ class BuildingFloodAreaController extends Controller
     {
         Validator::make($request->all(), [
             'name' => 'required|string',
-            'height' => 'required|string'
+            'height' => 'required|numeric|min:0'
         ])->validate();
         DB::beginTransaction();
         try {
@@ -104,7 +104,7 @@ class BuildingFloodAreaController extends Controller
     {
         Validator::make($request->all(), [
             'name' => 'required|string',
-            'height' => 'required|string'
+            'height' => 'required|numeric|min:0'
         ])->validate();
         DB::beginTransaction();
         try {

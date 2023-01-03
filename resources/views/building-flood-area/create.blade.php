@@ -32,8 +32,8 @@
                 </div>
                 <div class="mb-3">
                     <label for="height">Height</label>
-                    <textarea class="form-control form-control-solid" id="name" type="text" placeholder="height"
-                        name="height"></textarea>
+                    <input class="form-control form-control-solid" id="height" type="text" placeholder="0" name="height"
+                    attribute="number">
                 </div>
                 <button type="submit" class="btn btn-sm btn-primary"><i class="fas fa fa-save"></i> Simpan</button>
             </form>

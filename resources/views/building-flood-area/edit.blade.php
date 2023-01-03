@@ -29,13 +29,13 @@
                 @method('put')
                 <div class="mb-3">
                     <label for="name">Nama</label>
-                    <input class="form-control form-control-solid" id="name" type="text" placeholder="toko" name="name"
+                    <input class="form-control form-control-solid" id="name" type="text" placeholder="name" name="name"
                         value="{{ old('name', $buildingFloodArea->name) }}">
                 </div>
                 <div class="mb-3">
-                    <label for="descriotion">Height</label>
-                    <textarea class="form-control form-control-solid" id="name" type="text" placeholder="height"
-                        name="height">{{ old('height', $buildingFloodArea->height) }}</textarea>
+                    <label for="height">Height</label>
+                    <input class="form-control form-control-solid" id="height" type="text" placeholder="0" name="height"
+                    attribute="number" value="{{ old('name', $buildingFloodArea->height) }}">
                 </div>
                 <button type="submit" class="btn btn-sm btn-primary"><i class="fas fa fa-save"></i> Simpan</button>
             </form>
