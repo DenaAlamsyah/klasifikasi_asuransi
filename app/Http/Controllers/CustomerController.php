@@ -59,7 +59,7 @@ class CustomerController extends Controller
             'phone' => 'required|string',
             'email' => 'required|string',
             'gender' => 'required|in:male,female',
-            'indentity_number' => 'required|numeric|min:16',
+            'indentity_number' => 'required|string|min:16|max:16',
             'birth_place' => 'required|string',
             'birth_date' => 'required|date',
         ])->validate();
@@ -114,7 +114,7 @@ class CustomerController extends Controller
             'phone' => 'required|string',
             'email' => 'required|string',
             'gender' => 'required|in:male,female',
-            'indentity_number' => 'required|numeric|min:16',
+            'indentity_number' => 'required|string|min:16|max:16',
             'birth_place' => 'required|string',
             'birth_date' => 'required|date',
         ])->validate();
