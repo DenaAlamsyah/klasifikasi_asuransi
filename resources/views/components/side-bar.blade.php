@@ -1,11 +1,11 @@
-<ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
+<ul class="navbar-nav bg-gradient-danger sidebar sidebar-dark accordion" id="accordionSidebar">
 
     <!-- Sidebar - Brand -->
     <a class="sidebar-brand d-flex align-items-center justify-content-center" href="index.html">
         <div class="sidebar-brand-icon rotate-n-15">
-            <i class="fas fa-laugh-wink"></i>
+            <img src="/images/logo-1.png" width="30" height="30">
         </div>
-        <div class="sidebar-brand-text mx-3">{{ config('app.name', 'Laravel') }}</div>
+        <div class="sidebar-brand-text mx-3">{{ config('app.name', 'Asuransi') }}</div>
     </a>
 
     <!-- Divider -->
@@ -39,7 +39,7 @@
                 <a class="collapse-item" href="{{ route('building-object.index') }}">Objek Bangunan</a>
                 <a class="collapse-item" href="{{ route('building-type.index') }}">Tipe Bangunan</a>
                 <a class="collapse-item" href="{{ route('building-flood-area.index') }}">Area Banjir</a>
-                <a class="collapse-item" href="cards.html">Bangunan</a>
+                <a class="collapse-item" href="{{ route('building.index') }}">Bangunan</a>
             </div>
         </div>
     </li>

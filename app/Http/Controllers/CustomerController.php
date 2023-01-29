@@ -18,12 +18,13 @@ class CustomerController extends Controller
     public function index(Request $request)
     {
         if ($request->ajax()) {
-            $data = Customer::get();
+            $data = Customer::with('building')->get();
             return Datatables::of($data)->addIndexColumn()
                 ->addColumn('action', function ($row) {
                     $btn = '
                     <div class="d-flex d-flex flex-row align-items-center justify-content-start">
                         <a href=' . route("customer.edit", ["customer" => $row->id]) . ' class="btn btn-success btn-sm mx-1"><i class="fa fas fa-edit"></i></a>
+                        <a href=' . route("customer.show", ["customer" => $row->id]) . ' class="btn btn-success btn-sm mx-1"><i class="fa fas fa-list"></i></a>
                         <a href="#" onclick="doDelete(this)" class="btn btn-danger btn-sm mx-1" data-id=' . $row->id . '><i class="fa fas fa-trash"></i></a>
                     </div>
                     ';
@@ -83,7 +84,10 @@ class CustomerController extends Controller
      */
     public function show(Customer $customer)
     {
-        //
+
+        return view('customer.show', [
+            'customer' => $customer
+        ]);
     }
 
     /**
