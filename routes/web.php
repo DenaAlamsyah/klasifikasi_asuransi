@@ -4,6 +4,7 @@ use App\Http\Controllers\BuildingObjectController;
 use App\Http\Controllers\BuildingTypeController;
 use App\Http\Controllers\BuildingFloodAreaController;
 use App\Http\Controllers\CustomerController;
+use App\Http\Controllers\BuildingController;
 use App\Http\Controllers\HomeController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
@@ -31,6 +32,8 @@ Route::group(['middleware' => 'auth'], function () {
         'building-object' => BuildingObjectController::class,
         'building-type' => BuildingTypeController::class,
         'building-flood-area' => BuildingFloodAreaController::class,
-        'customer' => CustomerController::class
+        'customer' => CustomerController::class,
+        'building' => BuildingController::class
     ]);
 });
+Route::get('/customer_list', [CustomerController::class, 'customer_list'])->name('customer_list');

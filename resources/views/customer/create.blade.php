@@ -6,7 +6,7 @@
     <!-- Page Heading -->
     <div class="d-sm-flex align-items-center justify-content-between mb-4">
         <h1 class="h3 mb-2 text-gray-800">Tambah Data Pelanggan</h1>
-        <a href="{{ route('customer.index') }}" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm"><i
+        <a href="{{ route('customer.index') }}" class="d-none d-sm-inline-block btn btn-sm btn-danger shadow-sm"><i
                 class="fas fa-arrow-left fa-sm text-white-50"></i> Kembali</a>
     </div>
     @if ($errors->any())
@@ -55,7 +55,7 @@
                 </div>
                 <div class="mb-3">
                     <label for="indentity_number">No. KTP</label>
-                    <input class="form-control form-control-solid" id="indentity_number" type="number"
+                    <input class="form-control form-control-solid" id="indentity_number"
                         placeholder="No. KTP" name="indentity_number" value="{{ old('indentity_number') }}">
                 </div>
                 <div class="mb-3">

@@ -10,9 +10,9 @@
 <div class="container-fluid">
     <!-- Page Heading -->
     <div class="d-sm-flex align-items-center justify-content-between mb-4">
-        <h1 class="h3 mb-2 text-gray-800">Data Pelanggan</h1>
-        <a href="{{ route('customer.create') }}"
-            class="d-none d-sm-inline-block btn btn-sm btn-danger shadow-sm"><i
+        <h1 class="h3 mb-2 text-gray-800">Data Bangunan</h1>
+        <a href="{{ route('building.create') }}"
+            class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm"><i
                 class="fas fa-plus fa-sm text-white-50"></i> Tambah Data</a>
     </div>
     @if (session('success'))
@@ -24,7 +24,7 @@
     <!-- DataTales Example -->
     <div class="card shadow mb-4">
         <div class="card-header py-3">
-            <h6 class="m-0 font-weight-bold text-primary">Data Pelanggan</h6>
+            <h6 class="m-0 font-weight-bold text-primary">Data Bangunan</h6>
         </div>
         <div class="card-body">
             <div class="table-responsive">
@@ -32,13 +32,9 @@
                     <thead>
                         <tr>
                             <th>Nama</th>
-                            <th>Alamat</th>
-                            <th>No Telepon</th>
-                            <th>Email</th>
-                            <th>Jenis Kelamin</th>
-                            <th>NIK</th>
-                            <th>Tempat Lahir</th>
-                            <th>Tanggal Lahir</th>
+                            <th>Alamat Bangunan</th>
+                            <th>Harga</th>
+                            <th>Status</th>
                             <th>Action</th>
                         </tr>
                     </thead>
@@ -65,16 +61,12 @@
         $('#dataTable').DataTable({
             processing: true,
             serverSide: true,
-            ajax: "{{ route('customer.index') }}",
+            ajax: "{{ route('building.index') }}",
             columns: [
-                {data: 'name', name: 'name'},
+                {data: 'customer_name', name: 'customer_name'},
                 {data: 'address', name: 'address'},
-                {data: 'phone', name: 'phone'},
-                {data: 'email', name: 'email'},
-                {data: 'gender', name: 'gender'},
-                {data: 'indentity_number', name: 'indentity_number'},
-                {data: 'birth_place', name: 'birth_place'},
-                {data: 'birth_date', name: 'birth_date'},
+                {data: 'building_value', name: 'building_value'},
+                {data: 'status', name: 'status'},
                 {data: 'action', name: 'action', orderable: false, searchable: false},
             ]
         });
@@ -82,10 +74,10 @@
 
     function doDelete(el) {
         const id = $(el).data('id');
-        const route = `{{ route('customer.destroy', ['customer' => ':id']) }}`
+        const route = `{{ route('building.destroy', ['building' => ':id']) }}`
         console.log(route);
         Swal.fire({
-            title: 'Hapus Data Pelanggan',
+            title: 'Hapus Data Bangunan',
             text: 'Apakah anda yakin ingin menghapus item ini ?',
             icon: 'question',
             showCloseButton: true,
@@ -99,5 +91,8 @@
             }
         })
     }
+
+    
+
 </script>
 @endpush
