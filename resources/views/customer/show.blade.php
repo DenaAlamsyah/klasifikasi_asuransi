@@ -69,6 +69,7 @@ class="fas fa-plus fa-sm text-white-50"></i> Tambah Data Bangunan</a>
                                 <tr>
                                     <th>Nama Bangunan</th>
                                     <th>Alamat</th>
+                                    <th>Prediction</th>
                                     <th>Status</th>
                                     <th>Action</th>
                                 </tr>
@@ -103,6 +104,7 @@ class="fas fa-plus fa-sm text-white-50"></i> Tambah Data Bangunan</a>
             columns: [
                 {data: 'building_object.name', name: 'building_object.name'},
                 {data: 'address', name: 'address'},
+                {data: 'prediction', name: 'prediction'},
                 {data: 'status', name: 'status'},
                 {data: 'action', name: 'action', orderable: false, searchable: false},
             ]

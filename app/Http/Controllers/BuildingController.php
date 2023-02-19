@@ -194,17 +194,20 @@ class BuildingController extends Controller
     public function getBuildingByCustomerId(Request $request, $customerid)
     {
 
-        if ($request->ajax()) {
-            $data = Building::with('buildingObject')->where('customer_id', $customerid)->get();
-            return Datatables::of($data)->addIndexColumn()->addColumn('action', function ($row) {
-                $btn = '
+        // if ($request->ajax()) {
+        $data = Building::with('buildingObject')->where('customer_id', $customerid)->get();
+        return Datatables::of($data)->addIndexColumn()->addColumn('action', function ($row) {
+            $btn = '
                         <div class="d-flex d-flex flex-row align-items-center justify-content-start">
                         <a href=' . route("building.edit", ["building" => $row->id]) . ' class="btn btn-success btn-sm mx-1"><i class="fa fas fa-edit"></i></a>    
                             <a href="#" onclick="doDelete(this)" class="btn btn-danger btn-sm mx-1" data-id=' . $row->id . '><i class="fa fas fa-trash"></i></a>
                         </div>
                         ';
-                return $btn;
-            })->rawColumns(['action'])->make(true);
-        }
+            return $btn;
+        })->addColumn('prediction', function ($row) {
+            return $row->prediction == 1 ? "Approved" : "Rejected";
+        })
+            ->rawColumns(['action'])->make(true);
+        // }
     }
 }
