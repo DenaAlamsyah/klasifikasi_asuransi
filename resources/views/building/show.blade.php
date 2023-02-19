@@ -28,23 +28,37 @@
                 @method('put')
                 <div class="mb-3">
                     <label for="name">Nama : </label>
-                    <label for="name">{{$customer->name}}</label>
+                    <label for="name">{{$building->customer->name}}</label>
+                    
                 </div>
                 <div class="mb-3">
                     <label for="name">Objek Bangunan : </label>
-                    <label for="name">{{$building_object->name}}</label>
+                    <label for="name">{{$building->buildingObject->name}}</label>
                 </div>
                 <div class="mb-3">
                     <label for="name">Tipe Bangunan : </label>
-                    <label for="name">{{$building_type->description}}</label>
+                    <label for="name">{{$building->buildingType->description}}</label>
                 </div>
                 <div class="mb-3">
                     <label for="name">Area Banjir : </label>
-                    <label for="name">{{$building_flood_area->name}}</label>
+                    <label for="name">{{$building->buildingFloodArea->name}}</label>
                 </div>
                 <div class="mb-3">
                     <label for="address">Alamat : </label>
                     <label for="address">{{$building->address}}</label>
+                </div>
+                <div class="mb-3">
+                    <label for="address">Resiko Sekitar</label>
+                    <div class="mb-2">
+                        <label for="around">Depan : </label>
+                        <label for="front">{{$building->front}}</label><br>
+                        <label for="around">Belakang : </label>
+                        <label for="behind">{{$building->behind }}</label><br>
+                        <label for="around">Kanan : </label>
+                        <label for="right">{{$building->right }}</label><br>
+                        <label for="around">Kiri : </label>
+                        <label for="left">{{$building->left }}</label><br>
+                    </div>
                 </div>
                 <div class="mb-3">
                     <label for="address">Jumlah Lantai : </label>
@@ -64,11 +78,11 @@
                 </div>
                 <div class="mb-3">
                     <label for="address">Proses Produksi : </label>
-                    <label for="address">{{$building->is_production_process}}</label>
+                    <label for="address">{{$building->is_production_processv == 'yes' ? 'ya':'tidak'}}</label>
                 </div>
                 <div class="mb-3">
-                    <label for="address">Resiko Kebakaran : </label>
-                    <label for="address">{{$building->is_wildfire_risk}}</label>
+                    <label for="address">Ketersediaan APAR : </label>
+                    <label for="address">{{$building->is_wildfire_risk == 'yes' ? 'ya':'tidak'}}</label>
                 </div>
                 <div class="mb-3">
                     <label for="address">Nominal Bangunan : </label>
@@ -76,11 +90,11 @@
                 </div>
                 <div class="mb-3">
                     <label for="address">Keamanan : </label>
-                    <label for="address">{{$building->security}}</label>
+                    <label for="address">{{$building->security == 'yes' ?'ya':'tidak'}}</label>
                 </div>
                 <div class="mb-3">
                     <label for="address">Pemasangan cctv : </label>
-                    <label for="address">{{$building->is_cctv_installed}}</label>
+                    <label for="address">{{$building->is_cctv_installed == 'yes' ? 'ya':'tidak'}}</label>
                 </div>
                 <div class="mb-3">
                     <label for="address">Area Gempa : </label>

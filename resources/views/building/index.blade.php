@@ -10,10 +10,7 @@
 <div class="container-fluid">
     <!-- Page Heading -->
     <div class="d-sm-flex align-items-center justify-content-between mb-4">
-        <h1 class="h3 mb-2 text-gray-800">Data Bangunan</h1>
-        <a href="{{ route('building.create') }}"
-            class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm"><i
-                class="fas fa-plus fa-sm text-white-50"></i> Tambah Data</a>
+        <h1 class="h3 mb-2 text-gray-800">Data Pengajuan Bangunan</h1>
     </div>
     @if (session('success'))
     <div class="alert alert-success" role="alert">
@@ -24,7 +21,7 @@
     <!-- DataTales Example -->
     <div class="card shadow mb-4">
         <div class="card-header py-3">
-            <h6 class="m-0 font-weight-bold text-primary">Data Bangunan</h6>
+            <h6 class="m-0 font-weight-bold text-primary">Data Pengajuan Bangunan</h6>
         </div>
         <div class="card-body">
             <div class="table-responsive">
@@ -32,9 +29,7 @@
                     <thead>
                         <tr>
                             <th>Nama</th>
-                            <th>Alamat Bangunan</th>
-                            <th>Harga</th>
-                            <th>Status</th>
+                            <th>NIK</th>
                             <th>Action</th>
                         </tr>
                     </thead>
@@ -56,6 +51,7 @@
 <script src="{{ asset('bootstrap/vendor/datatables/jquery.dataTables.min.js') }}"></script>
 <script src="{{ asset('bootstrap/vendor/datatables/dataTables.bootstrap4.min.js') }}"></script>
 <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
 <script>
     $(document).ready(function () {
         $('#dataTable').DataTable({
@@ -63,10 +59,8 @@
             serverSide: true,
             ajax: "{{ route('building.index') }}",
             columns: [
-                {data: 'customer_name', name: 'customer_name'},
-                {data: 'address', name: 'address'},
-                {data: 'building_value', name: 'building_value'},
-                {data: 'status', name: 'status'},
+                {data: 'name', name: 'name'},
+                {data: 'indentity_number', name: 'indentity_number'},
                 {data: 'action', name: 'action', orderable: false, searchable: false},
             ]
         });

@@ -22,24 +22,16 @@ class BuildingController extends Controller
     public function index(Request $request)
     {
         if ($request->ajax()) {
-            $data = Building::get();
-            return Datatables::of($data)
-                ->editColumn(
-                    'customer_name',
-                    function ($row) {
-                        return $row->customer->name;
-                    }
-                )
-                ->addIndexColumn()->addColumn('action', function ($row) {
-                    $btn = '
-                    <div class="d-flex d-flex flex-row align-items-center justify-content-start">
-                        <a href=' . route("building.edit", ["building" => $row->id]) . ' class="btn btn-success btn-sm mx-1"><i class="fa fas fa-edit"></i></a>
-                        <a href=' . route("building.show", ["building" => $row->id]) . ' class="btn btn-success btn-sm mx-1"><i class="fa fas fa-list"></i></a>
+            $data = Customer::with('Building')->get();
+            return Datatables::of($data)->addIndexColumn()->addColumn('action', function ($row) {
+                $btn = '
+                    <div class="d-flex d-flex flex-row align-items-center justify-content-start">    
+                        <a href=' . route("building.create", ["building" => $row->id]) . ' class="btn btn-success btn-sm mx-1"><i class="fa fas fa-home"></i></a>
                         <a href="#" onclick="doDelete(this)" class="btn btn-danger btn-sm mx-1" data-id=' . $row->id . '><i class="fa fas fa-trash"></i></a>
                     </div>
                     ';
-                    return $btn;
-                })
+                return $btn;
+            })
                 ->rawColumns(['action'])
                 ->make(true);
         }
@@ -53,7 +45,7 @@ class BuildingController extends Controller
      */
     public function create()
     {
-        $customer = customer::all();
+        $customers = customer::all();
         $buildings_object = BuildingObject::all();
         $buildings_type = BuildingType::all();
         $buildings_flood_area = BuildingFloodArea::all();
@@ -69,11 +61,14 @@ class BuildingController extends Controller
     public function store(Request $request)
     {
         Validator::make($request->all(), [
-            'customer_id' => 'required|string',
             'building_object_id' => 'required|string',
             'building_type_id' => 'required|string',
             'building_flood_area_id' => 'required|string',
             'address' => 'required|string',
+            'front' => 'required|string',
+            'behind' => 'required|string',
+            'right' => 'required|string',
+            'left' => 'required|string',
             'floors' => 'required|numeric|min:0',
             'roof_type' => 'required|string',
             'wall_type' => 'required|string',
@@ -90,7 +85,7 @@ class BuildingController extends Controller
             Building::create($request->all());
             DB::commit();
 
-            return redirect()->route('building.index')->with('success', 'Berhasil menambah data Bangunan.');
+            return redirect()->route('customer.show', ['customer' => $request->customer_id])->with('success', 'Berhasil menambah data Bangunan.');
         } catch (\Throwable $th) {
             DB::rollBack();
             throw $th;
@@ -103,28 +98,26 @@ class BuildingController extends Controller
      * @param  \App\Models\Building  $building
      * @return \Illuminate\Http\Response
      */
-    public function show(Building $building)
+    public function show(Request $request, Building $building)
     {
-        $customer = customer::find($building->id);
-        $buildings_object = BuildingObject::find($building->id);
-        $buildings_type = BuildingType::find($building->id);
-        $buildings_flood_area = BuildingFloodArea::find($building->id);
-        // return view(
-        //     'building.show',
-        //     [
-        //         'customers' => $customer,
+        $data = Building::with('customer', 'buildingObject', 'buildingType', 'buildingFloodArea')->get();
 
-        //         'building' => $buildings_object, 'buildings_type' => $buildings_type, 'buildings_flood_area' => $buildings_flood_area
-        //     ]
-        // );
-        // dd($customer);
-        return view('building.show', [
-            'building' => $building,
-            'customer' => $customer,
-            'building_object' => $buildings_object,
-            'building_type' => $buildings_type,
-            'building_flood_area' => $buildings_flood_area
-        ]);
+        if ($request->ajax()) {
+            $data = Customer::with('Building')->get();
+            return Datatables::of($data)->addIndexColumn()->addColumn('action', function ($row) {
+                $btn = '
+                    <div class="d-flex d-flex flex-row align-items-center justify-content-start">
+                        <a href=' . route("customer.show", ["customer" => $row->id]) . ' class="btn btn-success btn-sm mx-1"><i class="fa fas fa-list"></i></a>    
+                        <a href=' . route("building.create", ["building" => $row->id]) . ' class="btn btn-success btn-sm mx-1"><i class="fa fas fa-home"></i></a>
+                        <a href="#" onclick="doDelete(this)" class="btn btn-danger btn-sm mx-1" data-id=' . $row->id . '><i class="fa fas fa-trash"></i></a>
+                    </div>
+                    ';
+                return $btn;
+            })
+                ->rawColumns(['action'])
+                ->make(true);
+        }
+        return view('building.show');
     }
 
     /**
@@ -135,8 +128,12 @@ class BuildingController extends Controller
      */
     public function edit(Building $building)
     {
+        $customers = customer::all();
+        $buildings_object = BuildingObject::all();
+        $buildings_type = BuildingType::all();
+        $buildings_flood_area = BuildingFloodArea::all();
         return view('building.edit', [
-            'building' => $building
+            'building' => $building, 'customers' => $customers, 'buildings_object' => $buildings_object, 'buildings_type' => $buildings_type, 'buildings_flood_area' => $buildings_flood_area
         ]);
     }
 
@@ -155,6 +152,10 @@ class BuildingController extends Controller
             'building_type_id' => 'required|string',
             'building_flood_area_id' => 'required|string',
             'address' => 'required|string',
+            'front' => 'required|string',
+            'behind' => 'required|string',
+            'right' => 'required|string',
+            'left' => 'required|string',
             'floors' => 'required|numeric|min:0',
             'roof_type' => 'required|string',
             'wall_type' => 'required|string',
@@ -187,6 +188,23 @@ class BuildingController extends Controller
     public function destroy(Building $building)
     {
         $building->delete();
-        return redirect()->route('building.index')->with('success', 'Berhasil menghapus data bangunan.');
+        return redirect()->route('customer.show', ['customer' => $building->customer_id])->with('success', 'Berhasil menghapus data bangunan.');
+    }
+
+    public function getBuildingByCustomerId(Request $request, $customerid)
+    {
+
+        if ($request->ajax()) {
+            $data = Building::with('buildingObject')->where('customer_id', $customerid)->get();
+            return Datatables::of($data)->addIndexColumn()->addColumn('action', function ($row) {
+                $btn = '
+                        <div class="d-flex d-flex flex-row align-items-center justify-content-start">
+                        <a href=' . route("building.edit", ["building" => $row->id]) . ' class="btn btn-success btn-sm mx-1"><i class="fa fas fa-edit"></i></a>    
+                            <a href="#" onclick="doDelete(this)" class="btn btn-danger btn-sm mx-1" data-id=' . $row->id . '><i class="fa fas fa-trash"></i></a>
+                        </div>
+                        ';
+                return $btn;
+            })->rawColumns(['action'])->make(true);
+        }
     }
 }

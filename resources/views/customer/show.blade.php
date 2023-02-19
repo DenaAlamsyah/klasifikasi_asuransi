@@ -29,7 +29,6 @@
                 <div class="mb-3">
                     <label for="name">Nama : </label>
                     <label for="name">{{$customer->name}}</label>
-                    
                 </div>
                 <div class="mb-3">
                     <label for="address">Alamat : </label>
@@ -38,44 +37,96 @@
                         name="address">{{ old('address', $customer->address) }}</textarea> --}}
                 </div>
                 <div class="mb-3">
-                    <label for="phone">No Telepon</label>
-                    <input disabled class="form-control form-control-solid" id="phone" type="text" placeholder="No. Handphone"
-                        name="phone" value="{{ old('phone', $customer->phone) }}">
+                    <label for="phone">No Telepon : </label>
+                    <label for="address">{{$customer->phone}}</label>
                 </div>
                 <div class="mb-3">
-                    <label for="email">E-mail</label>
-                    <input disabled class="form-control form-control-solid" id="email" type="text" placeholder="E-mail"
-                        name="email" value="{{ old('email', $customer->email) }}">
+                    <label for="email">E-mail : </label>
+                    <label for="address">{{$customer->email}}</label>
                 </div>
                 <div class="mb-3">
-                    <label for="gender">Jenis Kelamin</label>
-                    <select class="form-control form-control-solid" id="gender" placeholder="gender" name="gender">
-                        <option value="male" {{ old('gender', $customer->gender)==='male' ? 'selected' : '' }}>Laki-laki
-                        </option>
-                        <option value="female" {{ old('gender', $customer->gender)==='female' ? 'selected' : ''
-                            }}>Perempuan
-                        </option>
-                    </select>
+                    <label for="gender">Jenis Kelamin : </label>
+                    <label for="address">{{$customer->gender}}</label>
                 </div>
                 <div class="mb-3">
-                    <label for="indentity_number">No. KTP</label>
-                    <input disabled class="form-control form-control-solid" id="indentity_number" type="number"
-                        placeholder="No. KTP" name="indentity_number"
-                        value="{{ old('indentity_number', $customer->indentity_number) }}">
+                    <label for="indentity_number">No. KTP : </label>
+                    <label for="address">{{$customer->indentity_number}}</label>
                 </div>
                 <div class="mb-3">
-                    <label for="birth_place">Tempat Lahir</label>
-                    <input disabled class="form-control form-control-solid" id="name" type="text" placeholder="Tempat Lahir"
-                        name="birth_place" value="{{ old('birth_place', $customer->birth_place) }}">
+                    <label for="birth_place">Tempat Lahir : </label>
+                    <label for="address">{{$customer->birth_place}}</label>
                 </div>
                 <div class="mb-3">
-                    <label for="birth_date">Tanggal Lahir</label>
-                    <input disabled class="form-control form-control-solid" id="name" type="Date" placeholder="Tanggal Lahir"
-                        name="birth_date" value="{{ old('birth_date', $customer->birth_date) }}">
+                    <label for="birth_date">Tanggal Lahir : </label>
+                    <label for="address">{{$customer->birth_date}}</label>
                 </div>
-                <button type="submit" class="btn btn-sm btn-primary"><i class="fas fa fa-save"></i> Simpan</button>
+                <div class="card-body">
+                    <a href="{{ route('building.create', ['customerId' => $customer->id]) }}" class="d-none d-sm-inline-block btn btn-sm btn-danger shadow-sm"><i
+class="fas fa-plus fa-sm text-white-50"></i> Tambah Data Bangunan</a>
+                    <div class="table-responsive">
+                        <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                            <thead>
+                                <tr>
+                                    <th>Nama Bangunan</th>
+                                    <th>Alamat</th>
+                                    <th>Status</th>
+                                    <th>Action</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
             </form>
         </div>
     </div>
 </div>
+<form action="#" method="post" id="form-delete">
+    @csrf
+    @method('delete')
+</form>
+
 @endsection
+
+@push('js')
+<!-- Page level plugins -->
+<script src="{{ asset('bootstrap/vendor/datatables/jquery.dataTables.min.js') }}"></script>
+<script src="{{ asset('bootstrap/vendor/datatables/dataTables.bootstrap4.min.js') }}"></script>
+<script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<script>
+    $(document).ready(function () {
+        $('#dataTable').DataTable({
+            processing: true,
+            serverSide: true,
+            ajax: "{{route('building.by-customer-id', ['customerId' => "$customer->id"])}}",
+            columns: [
+                {data: 'building_object.name', name: 'building_object.name'},
+                {data: 'address', name: 'address'},
+                {data: 'status', name: 'status'},
+                {data: 'action', name: 'action', orderable: false, searchable: false},
+            ]
+        });
+    });
+
+    function doDelete(el) {
+        const id = $(el).data('id');
+        const route = `{{ route('building.destroy', ['building' => ':id']) }}`
+        Swal.fire({
+            title: 'Hapus Data Bangunan',
+            text: 'Apakah anda yakin ingin menghapus item ini ?',
+            icon: 'question',
+            showCloseButton: true,
+            showCancelButton: true,
+        }).then((result) => {
+            if (result.isConfirmed) {
+                const url = route.replace(':id', id);
+                const form = $('#form-delete');
+                console.log('ID ' + id,url)
+                form.attr('action', url);
+                form.submit();
+            }
+        })
+    }
+</script>
+@endpush

@@ -28,12 +28,22 @@ Auth::routes();
 
 Route::group(['middleware' => 'auth'], function () {
     Route::get('/home', [HomeController::class, 'index'])->name('home');
-    Route::resources([
-        'building-object' => BuildingObjectController::class,
-        'building-type' => BuildingTypeController::class,
-        'building-flood-area' => BuildingFloodAreaController::class,
-        'customer' => CustomerController::class,
-        'building' => BuildingController::class
-    ]);
+
+    Route::middleware(['role:admin-support|marketing'])->group(function () {
+        Route::resources([
+            'customer' => CustomerController::class,
+        ]);
+    });
+
+    Route::middleware(['role:marketing'])->group(function () {
+        Route::resources([
+            'building-object' => BuildingObjectController::class,
+            'building-type' => BuildingTypeController::class,
+            'building-flood-area' => BuildingFloodAreaController::class,
+            'building' => BuildingController::class
+        ]);
+    });
 });
 Route::get('/customer_list', [CustomerController::class, 'customer_list'])->name('customer_list');
+
+Route::get('building/get-building-by-customer-id/{customerId}', [BuildingController::class, 'getBuildingByCustomerId'])->name('building.by-customer-id');

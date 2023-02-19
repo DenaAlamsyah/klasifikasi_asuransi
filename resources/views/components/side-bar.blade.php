@@ -27,6 +27,7 @@
     </div>
 
     <!-- Nav Item - Pages Collapse Menu -->
+    @hasanyrole('marketing|pincab')
     <li class="nav-item">
         <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="true"
             aria-controls="collapseTwo">
@@ -39,19 +40,21 @@
                 <a class="collapse-item" href="{{ route('building-object.index') }}">Objek Bangunan</a>
                 <a class="collapse-item" href="{{ route('building-type.index') }}">Tipe Bangunan</a>
                 <a class="collapse-item" href="{{ route('building-flood-area.index') }}">Area Banjir</a>
-                <a class="collapse-item" href="{{ route('building.index') }}">Bangunan</a>
+                {{-- <a class="collapse-item" href="{{ route('building.index') }}">Bangunan</a> --}}
             </div>
         </div>
     </li>
+    @endhasanyrole
 
     <!-- Divider -->
     <hr class="sidebar-divider">
 
     <!-- Nav Item - Page Menu -->
+    @role('admin-support|pincab')
     <li class="nav-item active">
         <a class="nav-link" href="{{ route('customer.index') }}">
             <i class="fas fa-fw fa-tachometer-alt"></i>
             <span>Data Pelanggan</span></a>
     </li>
-
+    @endrole
 </ul>

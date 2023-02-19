@@ -11,9 +11,11 @@
     <!-- Page Heading -->
     <div class="d-sm-flex align-items-center justify-content-between mb-4">
         <h1 class="h3 mb-2 text-gray-800">Data Pelanggan</h1>
+        @role('admin-support|pincab')
         <a href="{{ route('customer.create') }}"
             class="d-none d-sm-inline-block btn btn-sm btn-danger shadow-sm"><i
                 class="fas fa-plus fa-sm text-white-50"></i> Tambah Data</a>
+        @endrole
     </div>
     @if (session('success'))
     <div class="alert alert-success" role="alert">

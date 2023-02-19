@@ -23,16 +23,9 @@
             <h6 class="m-0 font-weight-bold text-primary">Form tambah data bangunan</h6>
         </div>
         <div class="p-3 col col-6">
-            <form action="{{ route('building.store') }}" method="post">
+            <form action="{{ route('building.store') }}" method="POST">
                 @csrf
-                <div class="mb-3">
-                    <label for="customer_id">Customer</label>
-                    <select class="form-control form-control-solid" id="customer_id" type="text" placeholder="Nama" name="customer_id">
-                        @foreach ($customers as $customer)
-                        <option value="{{ $customer->id }}">{{ $customer->name }}</option>
-                        @endforeach
-                    </select>
-                </div>
+                <input type="hidden" name="customer_id" value="{{ request()->customerId }}">
                 <div class="mb-3">
                     <label for="building_object_id">Objek Bangunan</label>
                     <select class="form-control form-control-solid" id="building_object_id" type="text" placeholder="Nama" name="building_object_id">
@@ -63,6 +56,23 @@
                         name="address" value="{{ old('address') }}">
                 </div>
                 <div class="mb-3">
+                    <label for="address">Resiko Sekitar</label>
+                    <div class="mb-2">
+                        <label for="front">Depan</label>
+                        <input class="form-control form-control-solid" id="front" type="depan" placeholder="depan"
+                        name="front" value="{{ old('depan') }}">
+                        <label for="behind">Belakang</label>
+                        <input class="form-control form-control-solid" id="behind" type="belakang" placeholder="belakang"
+                        name="behind" value="{{ old('belakang') }}">
+                        <label for="right">Kanan</label>
+                        <input class="form-control form-control-solid" id="right" type="kanan" placeholder="kanan"
+                        name="right" value="{{ old('kanan') }}">
+                        <label for="left">Kiri</label>
+                        <input class="form-control form-control-solid" id="left" type="kiri" placeholder="kiri"
+                        name="left" value="{{ old('kiri') }}">
+                    </div>
+                </div>
+                <div class="mb-3">
                     <label for="floors">Jumlah Lantai</label>
                     <input class="form-control form-control-solid" id="floors" type="text"
                         placeholder="0" attribute="number" name="floors" value="{{ old('floors') }}">
@@ -90,7 +100,7 @@
                     </select>
                 </div>
                 <div class="mb-3">
-                    <label for="is_wildfire_risk">Resiko Kebakaran</label>
+                    <label for="is_wildfire_risk">Ketersediaan APAR</label>
                     <select class="form-control form-control-solid" id="produksi" placeholder="kebakaran" name="is_wildfire_risk">
                         <option value="yes" {{ old('is_wildfire_risk')==='yes' ? 'selected' : '' }}>Iya</option>
                         <option value="no" {{ old('is_wildfire_risk')==='no' ? 'selected' : '' }}>Tidak</option>
@@ -131,3 +141,12 @@
     </div>
 </div>
 @endsection
+
+@push('js')
+{{-- // In your Javascript (external .js resource or <script> tag) --}}
+    <script>
+    $(document).ready(function() {
+        $('.js-example-basic-single').select2();
+    });
+    </script>
+@endpush

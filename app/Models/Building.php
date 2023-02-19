@@ -2,6 +2,10 @@
 
 namespace App\Models;
 
+use App\Models\BuildingFloodArea;
+use App\Models\BuildingObject;
+use App\Models\BuildingType;
+use App\Models\Customer;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
@@ -26,11 +30,27 @@ class Building extends Model
         'security',
         'is_cctv_installed',
         'earthquake_area',
-        'building_value'
+        'building_value',
+        'status'
     ];
 
     public function customer()
     {
-        return $this->belongsTo(customer::class);
+        return $this->belongsTo(Customer::class);
+    }
+
+    public function buildingObject()
+    {
+        return $this->belongsTo(BuildingObject::class);
+    }
+
+    public function buildingType()
+    {
+        return $this->hasOne(BuildingType::class);
+    }
+
+    public function buildingFloodArea()
+    {
+        return $this->hasOne(BuildingFloodArea::class);
     }
 }
