@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('content')
-<div class="row justify-content-center bg-gradient-primary">
+<div class="row justify-content-center bg-gradient-danger">
 
     <div class="col-xl-10 col-lg-12 col-md-9">
 
@@ -9,7 +9,9 @@
             <div class="card-body p-0">
                 <!-- Nested Row within Card Body -->
                 <div class="row">
-                    <div class="col-lg-6 d-none d-lg-block bg-login-image"></div>
+                    <div class="col-lg-6 d-none d-lg-block text-center">
+                        <img src="/images/logo.png" height="200" width="auto">
+                    </div>
                     <div class="col-lg-6">
                         <div class="p-5">
                             <div class="text-center">
@@ -37,7 +39,7 @@
                                     </span>
                                 @enderror
                                 </div>
-                                <button type="submit" class="btn btn-primary btn-user btn-block">
+                                <button type="submit" class="btn btn-danger btn-user btn-block">
                                 {{ __('Login') }}
                                 </button>
                                 </form>
